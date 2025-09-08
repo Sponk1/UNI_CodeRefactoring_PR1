@@ -4,10 +4,17 @@ using System.Text.Json;
 
 namespace RefactoringExample
 {
+    public class User
+    {
+        public required string Name { get; set; }
+        public required int Age { get; set; }
+        public required double Discount { get; set; }
+        public bool IsActive { get; set; } = true;
+    }
     public class Program
     {
-        private static List<Dictionary<string, object>> users = new List<Dictionary<string, object>>();
-        
+        private static List<User> users = new List<User>();
+
         // конфигурация
         private static Dictionary<string, object> config = new Dictionary<string, object>
         {
@@ -16,66 +23,42 @@ namespace RefactoringExample
 
         public static void ProcessUser(Dictionary<string, object> userData)
         {
-            // валидация возраста
-            if ((int)userData["age"] < 18)
-            {
-                Console.WriteLine("User is too young");
-                return;
-            }
+            double discount;
 
-            // валидация имени
-            if (((string)userData["name"]).Length > 100)
+            //Валидация данных пользователя
+            if (!ValidateUserData(userData, out var error))
             {
-                Console.WriteLine("Name is too long");
+                Console.WriteLine(error);
                 return;
             }
 
             // расчет скидки
-            double discount = 0;
-            if ((bool)userData["isVIP"])
-            {
-                discount = 0.15;
-            }
-            else
-            {
-                if ((int)userData["orders"] > 5)
-                {
-                    discount = 0.1;
-                }
-                else
-                {
-                    discount = 0;
-                }
-            }
+            discount = CalculateDiscount((bool)userData["isVIP"], (int)userData["orders"]);
 
             // создание пользователя
-            var a = new Dictionary<string, object>
+            var user = new User
             {
-                { "name", userData["name"] },
-                { "age", userData["age"] },
-                { "discount", discount },
-                { "isActive", true }
+                Name = (string)userData["name"],
+                Age = (int)userData["age"],
+                Discount = discount,
             };
 
             // сохранение
-            users.Add(a);
-            Console.WriteLine("User saved: " + JsonSerializer.Serialize(a));
+            users.Add(user);
+            Console.WriteLine("User saved: " + JsonSerializer.Serialize(user));
 
             // генерация отчета
             GenerateReport(
-                (string)a["name"], 
-                (int)a["age"], 
-                (double)a["discount"], 
-                (bool)a["isActive"], 
-                DateTime.Now, 
+                user,
+                DateTime.Now,
                 (string)config["reportType"]
             );
         }
 
-        public static void GenerateReport(string n, int a, double d, bool i, DateTime dt, string t)
+        public static void GenerateReport(User user, DateTime dt, string t)
         {
             Console.WriteLine("Starting report generation...");
-            
+
             // проверка типа отчета
             if (t == "detailed")
             {
@@ -89,25 +72,25 @@ namespace RefactoringExample
             {
                 Console.WriteLine("=== STANDARD REPORT ===");
             }
-            
+
             // форматирование заголовка
-            string header = $"Report for: {n}";
+            string header = $"Report for: {user.Name}";
             Console.WriteLine(header);
             Console.WriteLine(new string('-', header.Length));
-            
+
             // основная информация (дублирование формата вывода)
-            Console.WriteLine($"Age: {a}");
-            Console.WriteLine($"Discount: {d:P0}");
-            Console.WriteLine($"Active status: {(i ? "Active" : "Inactive")}");
+            Console.WriteLine($"Age: {user.Age}");
+            Console.WriteLine($"Discount: {user.Discount:P0}");
+            Console.WriteLine($"Active status: {(user.IsActive ? "Active" : "Inactive")}");
             Console.WriteLine($"Report date: {dt:yyyy-MM-dd HH:mm:ss}");
-            
+
             // генерация раздела с деталями
             Console.WriteLine("\nDETAILS:");
             Console.WriteLine("Account information:");
-            
-            if (a < 25)
+
+            if (user.Age < 25)
             {
-                if (d > 0.1)
+                if (user.Discount > 0.1)
                 {
                     Console.WriteLine("Young customer with high discount");
                 }
@@ -116,9 +99,9 @@ namespace RefactoringExample
                     Console.WriteLine("Young customer with standard discount");
                 }
             }
-            else if (a >= 25 && a < 40)
+            else if (user.Age >= 25 && user.Age < 40)
             {
-                if (d > 0.15)
+                if (user.Discount > 0.15)
                 {
                     Console.WriteLine("Adult customer with premium discount");
                 }
@@ -129,7 +112,7 @@ namespace RefactoringExample
             }
             else
             {
-                if (d > 0.2)
+                if (user.Discount > 0.2)
                 {
                     Console.WriteLine("Senior customer with special discount");
                 }
@@ -138,9 +121,9 @@ namespace RefactoringExample
                     Console.WriteLine("Senior customer with standard discount");
                 }
             }
-            
+
             // дополнительная информация на основе статуса
-            if (i)
+            if (user.IsActive)
             {
                 Console.WriteLine("Customer is currently active");
                 Console.WriteLine("Last activity: " + dt.AddDays(-7).ToString("yyyy-MM-dd"));
@@ -150,28 +133,28 @@ namespace RefactoringExample
                 Console.WriteLine("Customer is not active");
                 Console.WriteLine("Account will be archived soon");
             }
-            
+
             // генерация рекомендаций (искусственно сложная логика)
             Console.WriteLine("\nRECOMMENDATIONS:");
-            if (!i && a < 30)
+            if (!user.IsActive && user.Age < 30)
             {
                 Console.WriteLine("Consider reactivation campaign for young inactive customer");
             }
-            else if (i && d < 0.05)
+            else if (user.IsActive && user.Discount < 0.05)
             {
                 Console.WriteLine("Consider loyalty program for active customer with low discount");
             }
-            else if (a > 60 && d < 0.1)
+            else if (user.Age > 60 && user.Discount < 0.1)
             {
                 Console.WriteLine("Consider senior discount program");
             }
-            
+
             // футер отчета
             Console.WriteLine("\n" + new string('=', 50));
             Console.WriteLine("Report generated by: Automated Reporting System");
             Console.WriteLine($"Generation timestamp: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
             Console.WriteLine(new string('=', 50));
-            
+
             // имитация сохранения отчета в разные форматы
             if (t == "detailed")
             {
@@ -180,29 +163,55 @@ namespace RefactoringExample
                 System.Threading.Thread.Sleep(100);
                 Console.WriteLine("Report saved successfully");
             }
-            
-            Console.WriteLine($"Report for {n} completed at {DateTime.Now:HH:mm:ss}");
+
+            Console.WriteLine($"Report for {user.Name} completed at {DateTime.Now:HH:mm:ss}");
         }
 
         public static double CalculateDiscount(bool isVIP, int orders)
         {
-            double discount = 0;
+            const double BigDiscount = 0.15;
+            const double NormalDiscount = 0.1;
+            const double NoDiscount = 0;
+
+            double discount;
+
             if (isVIP)
             {
-                discount = 0.15;
+                discount = BigDiscount;
+            }
+            else if (orders > 5)
+            {
+                discount = NormalDiscount;
             }
             else
             {
-                if (orders > 5)
-                {
-                    discount = 0.1;
-                }
-                else
-                {
-                    discount = 0;
-                }
+                discount = NoDiscount;
             }
+
             return discount;
+        }
+
+        private static bool ValidateUserData(Dictionary<string, object> userData, out string? errorMessage)
+        {
+            const int MinimumUserAge = 18;
+            const int LongestUserName = 100;
+
+            // валидация возраста
+            if ((int)userData["age"] < MinimumUserAge)
+            {
+                errorMessage = "User is too young";
+                return false;
+            }
+
+            // валидация имени
+            if (((string)userData["name"]).Length > LongestUserName)
+            {
+                errorMessage = "Name is too long";
+                return false;
+            }
+
+            errorMessage = null;
+            return true;
         }
 
         static void Main(string[] args)
@@ -214,9 +223,9 @@ namespace RefactoringExample
                 { "isVIP", true },
                 { "orders", 10 }
             };
-            
+
             ProcessUser(userData);
-            
+
             var discount = CalculateDiscount(true, 10);
             Console.WriteLine("Calculated discount: " + discount);
         }

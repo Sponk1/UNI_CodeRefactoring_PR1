@@ -12,3 +12,4 @@ D:\Study\Рефакторинг программного кода\ПР_1\Practic
 D:\Study\Рефакторинг программного кода\ПР_1\Practice_1\RPKApp1\obj\Debug\net9.0\RPKApp1.pdb
 D:\Study\Рефакторинг программного кода\ПР_1\Practice_1\RPKApp1\obj\Debug\net9.0\RPKApp1.genruntimeconfig.cache
 D:\Study\Рефакторинг программного кода\ПР_1\Practice_1\RPKApp1\obj\Debug\net9.0\ref\RPKApp1.dll
+D:\Study\Рефакторинг программного кода\ПР_1\Practice_1\RPKApp1\obj\Debug\net9.0\RPKApp1.sourcelink.json
