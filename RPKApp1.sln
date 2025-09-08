@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPKApp1", "RPKApp1.csproj", "{FF830332-E6AE-0978-6E70-4372B06E73FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF830332-E6AE-0978-6E70-4372B06E73FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF830332-E6AE-0978-6E70-4372B06E73FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF830332-E6AE-0978-6E70-4372B06E73FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF830332-E6AE-0978-6E70-4372B06E73FE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CBE8C650-51CB-4FE8-9EB0-C32613B45A01}
+	EndGlobalSection
+EndGlobal
