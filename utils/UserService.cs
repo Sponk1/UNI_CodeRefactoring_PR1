@@ -17,7 +17,7 @@ namespace RefactoringExample
                 return false;
             }
 
-            var discount = CalculateDiscount(
+            var discount = DiscountCalculator.CalculateDiscount(
                 (bool)userData["isVIP"],
                 (int)userData["orders"]
             );
@@ -33,30 +33,6 @@ namespace RefactoringExample
             Console.WriteLine("User saved: " + JsonSerializer.Serialize(user));
 
             return true;
-        }
-
-        private static double CalculateDiscount(bool isVIP, int orders)
-        {
-            const double BigDiscount = 0.15;
-            const double NormalDiscount = 0.1;
-            const double NoDiscount = 0;
-
-            double discount;
-
-            if (isVIP)
-            {
-                discount = BigDiscount;
-            }
-            else if (orders > 5)
-            {
-                discount = NormalDiscount;
-            }
-            else
-            {
-                discount = NoDiscount;
-            }
-
-            return discount;
         }
         
         private static bool ValidateUserData(Dictionary<string, object> userData, out string? errorMessage)
