@@ -95,7 +95,7 @@
 ### Результат работы программы
 
 #### До рефакторинга:
-
+```
 User saved: {"name":"John Doe","age":25,"discount":0.15,"isActive":true}
 Starting report generation...
 === DETAILED REPORT ===
@@ -131,10 +131,10 @@ Saving detailed report to database...
 Report saved successfully
 Report for John Doe completed at 19:01:36
 Calculated discount: 0,15
-
+```
 
 #### После рефакторинга:
-
+```
 User saved: {"Name":"John Doe","Age":25,"Discount":0.15,"IsActive":true}
 Starting report generation...
 === DETAILED REPORT ===
@@ -161,3 +161,4 @@ Saving detailed report to database...
 Report saved successfully
 Report for John Doe completed at 12:37:09
 Calculated discount: 0,15
+```
