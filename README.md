@@ -170,3 +170,17 @@ Report saved successfully
 Report for John Doe completed at 12:37:09
 Calculated discount: 0,15
 ```
+
+### Тестирование методов
+
+#### Метод `CalculateDiscount`
+
+| Сценарий | Входные данные | Ожидаемый результат | Статус |
+|-----------|----------------|------------------|--------|
+| VIP клиент | isVIP = true, orders = 0 | 0.15 |  Пройдено |
+| VIP клиент | isVIP = true, orders = 10 | 0.15 |  Пройдено |
+| Не VIP, достаточное количество заказов | isVIP = false, orders = 6 | 0.10 |  Пройдено |
+| Не VIP, достаточное количество заказов | isVIP = false, orders = 10 | 0.10 |  Пройдено |
+| Не VIP, мало заказов | isVIP = false, orders = 0 | 0.0 |  Пройдено |
+| Не VIP, мало заказов | isVIP = false, orders = 5 | 0.0 |  Пройдено |
+| Отрицательное количество заказов | isVIP = false, orders = -1 | Исключение ArgumentOutOfRangeException |  Пройдено |

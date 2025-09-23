@@ -20,8 +20,6 @@ namespace RefactoringExample
     }
     public class Program
     {
-        // private static List<User> users = new List<User>();
-
         // конфигурация
         private static Dictionary<string, object> config = new Dictionary<string, object>
         {
@@ -40,53 +38,6 @@ namespace RefactoringExample
                 );
             }
         }
-        
-        // public static double CalculateDiscount(bool isVIP, int orders)
-        // {
-        //     const double BigDiscount = 0.15;
-        //     const double NormalDiscount = 0.1;
-        //     const double NoDiscount = 0;
-
-        //     double discount;
-
-        //     if (isVIP)
-        //     {
-        //         discount = BigDiscount;
-        //     }
-        //     else if (orders > 5)
-        //     {
-        //         discount = NormalDiscount;
-        //     }
-        //     else
-        //     {
-        //         discount = NoDiscount;
-        //     }
-
-        //     return discount;
-        // }
-
-        private static bool ValidateUserData(Dictionary<string, object> userData, out string? errorMessage)
-        {
-            const int MinimumUserAge = 18;
-            const int LongestUserName = 100;
-
-            // валидация возраста
-            if ((int)userData["age"] < MinimumUserAge)
-            {
-                errorMessage = "User is too young";
-                return false;
-            }
-
-            // валидация имени
-            if (((string)userData["name"]).Length > LongestUserName)
-            {
-                errorMessage = "Name is too long";
-                return false;
-            }
-
-            errorMessage = null;
-            return true;
-        }
 
         static void Main(string[] args)
         {
@@ -100,7 +51,6 @@ namespace RefactoringExample
 
             ProcessUser(userData);
 
-            // var discount = CalculateDiscount(true, 10);
             var discount = DiscountCalculator.CalculateDiscount(
                 (bool)userData["isVIP"], 
                 (int)userData["orders"]
