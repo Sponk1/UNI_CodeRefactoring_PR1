@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RPKApp1")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6ecb2bf6ed5986661531addae07a5cad3425e79a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8ae0f9a1cadec0d500365534a1979c9f63e41b75")]
 [assembly: System.Reflection.AssemblyProductAttribute("RPKApp1")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RPKApp1")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
